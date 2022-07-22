@@ -1,0 +1,5 @@
+card_number,name,balance,status,email,mobile,PIN
+1000,Bhaskar,55500,Active,bhaskar@gmail.com,9778896534,1234
+1001,Shankar,26000,Blocked,shankar@yahoo.com,9556678909,5678
+1002,Tilak,38000,Deactive,tilak@hotmail.com,9778895566,7896
+1003,Arun,48000,Active,arun@hotmail.com,97788955966,7876

@@ -1,0 +1,149 @@
+import pandas as pd
+
+'''
+card_number:
+	card+_nuber present:
+		status==active:
+			pin_enter:
+				pin_valid:
+					balacne_enquir
+					deposit
+					withdraw:
+						balcne > 0
+'''
+
+'''
+card_number:
+	card+_nuber present:
+		status==active:
+            balacne_enquir
+             pin enter:
+                valid
+                    success entry
+                not valid
+                    failure entry
+            deposit
+            withdraw:
+                balcne > 0
+'''
+
+while True:
+    print('1-Balance enquiry')
+    print('2-Deposit')
+    print('3-Withdraw')
+    print('4-Exit')
+    choice = int(input('\nplease choice your type of transactions:'))
+    if choice == 4:
+        break
+    df = pd.read_csv('new_file.csv')
+    input_card_num = int(input("Enter card number:"))
+    index = df.index[df['card_number'] == input_card_num].tolist()[0]
+    # index = df.index[df['card_number'] == input_card_num].tolist()
+    # print(index,index)
+
+
+    status = df.loc[df['card_number'] == input_card_num,'status']
+    # index1 = df.reset_index[df['card_number'] == input_card_num,'status' ]
+    # print(index1)
+
+    if status.empty:
+        print("Card is not Valid")
+    else:
+        # print(status[0])
+        if status[index] == 'Active':
+            max_tries = 3
+
+
+            while max_tries > 0:
+                input_pin_num = int(input("Enter pin number:"))
+                pin_number = df.loc[df['card_number'] == input_card_num, 'PIN'][index]
+                if input_pin_num == pin_number:
+                    transaction_dict = {'Transcation Type':'','Transcation Amount':'','Card Number':input_card_num,
+                                        'Status':'Success'}
+                    bal_output = df.loc[df['PIN'] == pin_number, 'balance']
+                    if choice == 1:
+                        print("Balance is : ", bal_output[index])
+                        transaction_dict['Transcation Type'] = 'Balance Enquiry'
+                        transaction_dict['Transcation Amount'] = 0
+                    if choice == 2:
+                        deposit_amount = int(input("Enter amount to deposit:"))
+                        new_balance = bal_output[index] + deposit_amount
+                        df.at[index, 'balance'] = new_balance
+                        print("Amount deposited.")
+                        print("New Balance is : ", new_balance)
+                        print(df)
+                        df.to_csv('new_file.csv', index=False, sep=',')
+                        transaction_dict['Transcation Type'] = 'Deposit'
+                        transaction_dict['Transcation Amount'] = deposit_amount
+
+                    if choice == 3:
+                        withdraw_amount = int(input("Enter amount to withdraw:"))
+                        if withdraw_amount > bal_output[index]:
+                            print("Not enough balance")
+                        else:
+                            new_balance = bal_output[index] - withdraw_amount
+                            df.at[index,'balance']=new_balance
+                            print("Amount is withdrawn")
+                            print("New Balance is : ", new_balance)
+                            print(df)
+                            df.to_csv('new_file.csv', index=False, sep=',')
+                            transaction_dict['Transcation Type'] = 'Withdrawal'
+                            transaction_dict['Transcation Amount'] = withdraw_amount
+                    break
+                else:
+                    print("PIN not valid")
+                    max_tries = max_tries-1
+                    transaction_dict = {'Transcation Type': '', 'Transcation Amount': '', 'Card Number': input_card_num,
+                                        'Status': 'Failure'}
+                    if choice == 1:
+                        transaction_dict['Transcation Type'] = 'Balance Enquiry'
+                    if choice == 2:
+                        transaction_dict['Transcation Type'] = 'Withdrawal'
+                    if choice == 3:
+                            transaction_dict['Transcation Type'] = 'Deposit'
+
+
+        else:
+            print("Card is not Active")
+
+    # bal_output = df.loc[df['PIN'] == input_pin, 'status']
+    #
+    # if status[0] == 'Active':
+    #     deposit_amount = int(input("Enter amount to deposit:"))
+    #     new_balance = bal_output[0] + deposit_amount
+    # else:
+    #     print("Account is not active, Deposit is not allowed.")
+    #
+    #
+    # input_pin = int(input("Enter pin number:"))
+    # bal_output = df.loc[df['PIN'] == input_pin, 'balance']
+    #
+    # if bal_output.empty:
+    #     print("PIN not valid")
+    # else:
+    #     if choice == 1:
+    #         print("Balance is : ", bal_output[0])
+    #     if choice == 2:
+    #         print("deposit")
+    #         status = df.loc[df['PIN'] == input_pin, 'status']
+    #         if status[0] == 'Active':
+    #             deposit_amount = int(input("Enter amount to deposit:"))
+    #             new_balance = bal_output[0]+deposit_amount
+    #         else:
+    #             print("Account is not active, Deposit is not allowed.")
+    #
+    # if choice == 4:
+    #     break
+
+# dir_path = 'D:\\ibridge360\\python oops\\oops txt file\\'
+# dict1 = pd.read_csv('customer_atm_project.csv',).to_dict()
+# dict1.keys()
+# dict1.get("card_number")
+# dict1.get('PIN')
+# dict1.items()
+
+# df = pd.read_csv('customer_atm_project.csv')
+# df
+# s = df.loc[df['card_number']==1000,'balance']
+# s
+

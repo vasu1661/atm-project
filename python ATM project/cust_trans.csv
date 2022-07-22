@@ -1,0 +1,8 @@
+trans_ID,trans_date and time,trans_amt,tran_type,card_number,trans_status
+1715142,,8000,Withdrawl,1000,success
+1716162,,0,Bal enquiry,2000,success
+
+1716163,2022-06-07 10:52:20.457439,Deposit,1000,1000,Success
+1716164,2022-06-08 20:32:43.951655,Balance Enquiry,0,1000,Success
+1716165,2022-06-10 11:42:05.039180,Balance Enquiry,0,1000,Success
+1716166,2022-06-10 11:44:49.258877,,Balance Enquiry,0,1000,Success
